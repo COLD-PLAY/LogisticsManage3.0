@@ -18,7 +18,7 @@
     <a href="index.php" class="backhome">back</a>
     
     <?php
-    include('user.php');
+    include_once('user.php');
     $username = $_POST['username'];
     $password = $_POST['password'];
 

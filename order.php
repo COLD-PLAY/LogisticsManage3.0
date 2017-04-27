@@ -1,5 +1,5 @@
 <?php
-include('conn.php');
+include_once('conn.php');
 class order {
 	private $fromuser;
 	private $fromphonenum;
@@ -12,6 +12,14 @@ class order {
 
 	private $conn;
 
+	private $flag;
+
+	public function getfromuser() {
+		return $this->fromuser;
+	}
+	public function getflag() {
+		return $this->flag;
+	}
 	public function __construct() {
 		$num = func_num_args();
 		$args = func_get_args();
@@ -25,6 +33,8 @@ class order {
 			$this->toaddress = $args[5];
 			$this->ordernum = $args[6];
 			$this->status = $args[7];
+
+			$this->flag = true;
 		}
 		elseif ($num == 1) {
 			$this->ordernum = $args[0];
@@ -39,6 +49,11 @@ class order {
 				$this->toaddress = $result['toaddress'];
 
 				$this->status = $result['fromaddress'];
+
+				$this->flag = true;
+			}
+			else {
+				$this->flag = false;
 			}
 		}
 	}

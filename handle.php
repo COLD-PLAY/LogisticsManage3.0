@@ -18,32 +18,38 @@
                 <td>当前状态</td>
             </tr>
             <?php
-            include('user.php');
+            include_once('user.php');
            	$username = $_GET['username'];
             $nowuser = new user($username);
 
-            echo "<tr>";
-            // start the connection
-            $nowuser->start();
-            $result = $nowuser->getOrders();
-            if ($result) {
-	            while ($order = $result->fetch()) {
-	            	echo "<td>$order[0]</td>";
-	            	echo "<td>$order[1]</td>";
-	            	echo "<td>$order[2]</td>";
-	            	echo "<td>$order[3]</td>";
-	            	echo "<td>$order[4]</td>";
-	            	echo "<td>$order[5]</td>";
-	            	echo "<td>$order[6]</td>";
-	            	echo "<td>$order[7]</td>";
-	            }
+            if ($username == 'root') {
+            	echo "<tr><td>under root</td></tr>";
+            }
+
+            else {
+	            echo "<tr>";
+	            // start the connection
+	            $nowuser->start();
+	            $result = $nowuser->getOrders();
+	            if ($result) {
+		            while ($order = $result->fetch()) {
+		            	echo "<td>$order[0]</td>";
+		            	echo "<td>$order[1]</td>";
+		            	echo "<td>$order[2]</td>";
+		            	echo "<td>$order[3]</td>";
+		            	echo "<td>$order[4]</td>";
+		            	echo "<td>$order[5]</td>";
+		            	echo "<td>$order[6]</td>";
+		            	echo "<td>$order[7]</td>";
+		            }
+		        }
+		        else {
+		        	echo "<td>no orders now</td>";
+		        }
+	            echo "</tr>";
+	            // close the connection
+	            $nowuser->close();
 	        }
-	        else {
-	        	echo "<td>no orders now</td>";
-	        }
-            echo "</tr>";
-            // close the connection
-            $nowuser->close();
             ?>
 		</table>
 	</div>
@@ -53,11 +59,11 @@
 	    <hr class="line">
 
         <div>
-            <a href="addorder.php?username=${username}" class="jump">添加订单</a>
+            <a href="addorder.php?username=<?php echo $username; ?>" class="jump" target="_blank">添加订单</a>
             <hr class="line">
-            <a href="searchorder.php?username=${username}" class="jump" target="_blank">搜索订单</a>
+            <a href="searchorder.php?username=<?php echo $username; ?>" class="jump" target="_blank">搜索订单</a>
             <hr class="line">
-            <a href="updateuser.php?username=${username}" class="jump" target="_blank">修改信息</a>
+            <a href="updateuser.php?username=<?php echo $username; ?>" class="jump">修改信息</a>
             <hr class="line">
             <?php
                 if ($username == 'root') {

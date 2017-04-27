@@ -1,5 +1,5 @@
 <?php
-include('conn.php');
+include_once('conn.php');
 
 // class user extends conn {
 class user {
@@ -7,14 +7,24 @@ class user {
 	private $password;
 	private $phonenum;
 	private $address;
-	private $conn;
 	private $status;
+
+	private $conn;
 
 	function getstatus() {
 		return $this->status;
 	}
 	function getpassword() {
 		return $this->password;
+	}
+	function getusername() {
+		return $this->username;
+	}
+	function getphonenum() {
+		return $this->phonenum;
+	}
+	function getaddress() {
+		return $this->address;
 	}
 
 	public function __construct() {
@@ -87,7 +97,11 @@ class user {
 
 	// update user from table
 	public function update($password, $phonenum, $address) {
-		$sql = "UPDATE user SET password='$password', phonenum='$phonenum', address='$address'";
+		if ($password) $this->password = $password;
+		if ($phonenum) $this->phonenum = $phonenum;
+		if ($address) $this->address = $address;
+
+		$sql = "UPDATE user SET password='$this->password', phonenum='$this->phonenum', address='$this->address' WHERE username='$this->username'";
 
 		if ($this->conn) {
 			$this->conn->exec($sql);
@@ -109,15 +123,64 @@ class user {
 		return false;
 	}
 
+	// public function delete_byroot($username) {
+	// 	$sql = "DELETE FROM user WHERE username='$username'";
+
+	// 	if ($this->conn) {
+	// 		$this->conn->exec($sql);
+	// 		return true;
+	// 	}
+
+	// 	return false;
+	// }
+
 	// get the orders about user from orders
 	public function getOrders() {
 		$sql = "SELECT * FROM orders WHERE fromuser='$this->username' OR touser='$this->username'";
 
 		if ($this->conn) {
 			$result = $this->conn->query($sql);
-			return $result;
+			if ($result->rowCount())
+				return $result;
 		}
+		return null;
+	}
 
+	public function getAllOrders() {
+		$sql = "SELECT * FROM orders";
+
+		if ($this->conn) {
+			$result = $this->conn->query($sql);
+			if ($result->rowCount())
+				return $result;
+		}
+		return null;
+	}
+
+	public function getAllUsers() {
+		$sql = "SELECT * FROM user";
+
+		if ($this->conn) {
+			$result = $this->conn->query($sql);
+			if ($result->rowCount())
+				return $result;
+		}
+		return null;
+	}
+
+	public function search($phonenum, $ordernum, $username) {
+		$sql = "SELECT * FROM orders WHERE ";
+
+		if ($phonenum) $sql .= "(fromphonenum='$phonenum' OR tophonenum='$phonenum') ";
+		if ($ordernum) $sql .= "AND ordernum='$ordernum' ";
+
+		if ($username) $sql .= "AND (fromuser='$username' OR touser='$username')";
+		
+		if ($this->conn) {
+			$result = $this->conn->query($sql);
+			if ($result->rowCount())
+				return $result;
+		}
 		return null;
 	}
 }

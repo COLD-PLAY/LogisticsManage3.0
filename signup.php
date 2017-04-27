@@ -21,10 +21,10 @@
             <input type="submit" value="注册">
         </form>
     </div>
-    <a href="index.jsp" class="backhome">back</a>
+    <a href="index.php" class="backhome">back</a>
 
     <?php
-    include('user.php');
+    include_once('user.php');
     $username = $_POST['username'];
     $password = $_POST['password'];
     $phonenum = $_POST['phonenum'];
