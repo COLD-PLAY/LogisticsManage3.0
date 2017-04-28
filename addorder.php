@@ -33,7 +33,7 @@
 
 		$noworder->close();
 		if ($flag) {
-    		echo "<script>alert('add order successfully!;</script>";
+    		echo "<script>alert('add order successfully!');</script>";
     	}
 		else {
 			echo "<script>alert('add order failed! please try again');</script>";
