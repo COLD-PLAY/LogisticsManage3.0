@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>show users</title>
+	<meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="mystyle.css">
 </head>
 <body>
@@ -22,9 +23,11 @@
 		$nowuser->start();
 		$result = $nowuser->getAllUsers();
 
+		$nowuser->close();
+
 		echo "<tr>";
 		if ($result) {
-			while ($user = $result->fetch()) {
+			while ($user = $result->fetch() and $user[0] != 'root') {
 				echo "<td>$user[0]</td>";
 				echo "<td>$user[2]</td>";
 				echo "<td>$user[3]</td>";

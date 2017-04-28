@@ -48,7 +48,8 @@
             <input type="submit" value="修改">
         </form>
     </div>
-
+    <a href="handle.php<?php echo "?username=$username"; ?>" class="backhome">back</a>
+    
     <?php
     $password = $_POST['password'];
     $new_password = $_POST['new_password'];
