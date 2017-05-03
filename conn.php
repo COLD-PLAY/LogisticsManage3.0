@@ -1,9 +1,10 @@
 <?php
 class conn {
-	private $SERVERNAME = 'bdm276664659.my3w.com';
-	private $USERNAME = 'bdm276664659';
-	private $PASSWORD = 'liaozhou1998';
-	private $DBNAME = 'bdm276664659_db';
+	// basic parameter
+	private $SERVERNAME = 'host';
+	private $USERNAME = 'username';
+	private $PASSWORD = 'password';
+	private $DBNAME = 'dbname';
 
 	function __construct() {
 		$num = func_num_args();
