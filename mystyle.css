@@ -58,7 +58,8 @@ input[type=submit] {
     color: #27A9E3;
 }
 .jump {
-    color: #27A9E3;
+    /*color: #27A9E3;*/
+    color: black;
 }
 input[type=search] {
     /*设置边框属性*/

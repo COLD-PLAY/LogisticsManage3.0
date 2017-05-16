@@ -15,6 +15,8 @@
             <th>接收用户地址</th>
             <th>订单号</th>
             <th>当前状态</th>
+            <th>货物名字</th>
+            <th>货物数量</th>
         </tr>
 
         <?php
@@ -27,23 +29,25 @@
 
         $nowuser->close();
 
-        echo "<tr>";
         if ($result) {
         	while ($order = $result->fetch()){
-        		echo "<td>$order[0]</td>";
-            	echo "<td>$order[1]</td>";
-            	echo "<td>$order[2]</td>";
-            	echo "<td>$order[3]</td>";
-            	echo "<td>$order[4]</td>";
-            	echo "<td>$order[5]</td>";
-            	echo "<td>$order[6]</td>";
-            	echo "<td>$order[7]</td>";
+        		echo "<tr>";
+                echo "<td>$order[0]</td>";
+                echo "<td>$order[1]</td>";
+                echo "<td>$order[2]</td>";
+                echo "<td>$order[3]</td>";
+                echo "<td>$order[4]</td>";
+                echo "<td>$order[5]</td>";
+                echo "<td>$order[6]</td>";
+                echo "<td>$order[7]</td>";
+                echo "<td>$order[8]</td>";
+                echo "<td>$order[9]</td>";
+                echo "</tr>";
         	}
         }
         else {
-        	echo "<td>no orders</td>";
+        	echo "<tr><td>no orders</td></tr>";
         }
-        echo "</tr>";
         ?>
     </table>
 </body>

@@ -9,6 +9,8 @@ class order {
 	private $toaddress;
 	private $ordernum;
 	private $status;
+	private $goodname;
+	private $goodnum;
 
 	private $conn;
 
@@ -33,6 +35,8 @@ class order {
 			$this->toaddress = $args[5];
 			$this->ordernum = $args[6];
 			$this->status = $args[7];
+			$this->goodname = $args[8];
+			$this->goodnum = $args[9];
 
 			$this->flag = true;
 		}
@@ -49,6 +53,9 @@ class order {
 				$this->toaddress = $result['toaddress'];
 
 				$this->status = $result['fromaddress'];
+
+				$this->goodname = $result['goodname'];
+				$this->goodnum = $result['goodnum'];
 
 				$this->flag = true;
 			}
@@ -80,7 +87,7 @@ class order {
 	}
 
 	public function insert() {
-		$sql = "INSERT INTO orders VALUES('$this->fromuser', '$this->fromphonenum', '$this->fromaddress', '$this->touser', '$this->tophonenum', '$this->toaddress', '$this->ordernum', '$this->status')";
+		$sql = "INSERT INTO orders VALUES('$this->fromuser', '$this->fromphonenum', '$this->fromaddress', '$this->touser', '$this->tophonenum', '$this->toaddress', '$this->ordernum', '$this->status', '$this->goodname', '$this->goodnum')";
 
 		if ($this->conn) {
 			$this->conn->exec($sql);
@@ -91,19 +98,23 @@ class order {
 
 	public function delete() {
 		$sql = "DELETE FROM orders WHERE ordernum='$this->ordernum'";
+		$sql1 = "UPDATE `trucks` SET `ordernum`='0', `status`='wait' WHERE ordernum='$this->ordernum'";
 
 		if ($this->conn) {
 			$this->conn->exec($sql);
+			$this->conn->exec($sql1);
 			return true;
 		}
 		return false;
 	}
 
-	public function update($status) {
+	public function update($status, $trucknum) {
 		$sql = "UPDATE orders SET status='$status' WHERE ordernum='$this->ordernum'";
+		$sql1 = "UPDATE `trucks` SET `status`='$status', ordernum='$this->ordernum' WHERE trucknum='$trucknum'";
 
 		if ($this->conn) {
 			$this->conn->exec($sql);
+			$this->conn->exec($sql1);
 			return true;
 		}
 		return false;

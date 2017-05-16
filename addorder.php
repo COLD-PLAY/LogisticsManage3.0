@@ -8,6 +8,8 @@
 	<?php
 	include_once('user.php');
 	include_once('order.php');
+    include_once('good.php');
+
 	$fromuser = $_GET['username'];
 
 	if ($fromuser) {
@@ -25,13 +27,22 @@
 
 		$ordernum = date('Ymdhi');
 
-		$noworder = new order($fromuser, $fromphonenum, $fromaddress, $touser, $tophonenum, $toaddress, $ordernum, $fromaddress);
+        $goodname = $_POST['goodname'];
+        $goodnum = $_POST['goodnum'];
+
+		$noworder = new order($fromuser, $fromphonenum, $fromaddress, $touser, $tophonenum, $toaddress, $ordernum, 'wait', $goodname, $goodnum);
+        // $nowgood = new good($goodname, $goodnum, $ordernum, $fromuser, $touser, 'wait');
 
 		$noworder->start();
 		$flag = $noworder->insert();
 		// echo $noworder->getfromuser();
 
 		$noworder->close();
+
+        // $nowgood->start();
+        // $flag = $nowgood->insert() and $flag;
+
+        // $nowgood->close();
 		if ($flag) {
     		echo "<script>alert('add order successfully!');</script>";
     	}
@@ -56,6 +67,10 @@
             <hr class="line">
             <input type="text" name="tophonenum" placeholder="发送到电话">
             <hr class="line">
+            <input type="text" name="goodname" placeholder="货物名字">
+            <hr class="line">
+            <input type="text" name="goodnum" placeholder="货物数量">
+            <hr class="line">
             <input type="submit" value="添加">
         </form>
     </div>
@@ -63,7 +78,7 @@
     <script type="text/javascript">
         function checkall(f) {
             var username = document.getElementById("username").innerText;
-            if (f.fromuser.value == "" || f.fromaddress.value == "" || f.fromphonenum.value == "" || f.touser.value == "" || f.toaddress.value == "" || f.tophonenum == "") {
+            if (f.fromuser.value == "" || f.fromaddress.value == "" || f.fromphonenum.value == "" || f.touser.value == "" || f.toaddress.value == "" || f.tophonenum == "" || f.goodname == "" || f.goodnum == "") {
                 alert("请填写完整！");
                 return false;
             }

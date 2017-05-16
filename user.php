@@ -168,13 +168,46 @@ class user {
 		return null;
 	}
 
+	public function getWaitGoods() {
+		$sql = "SELECT * FROM orders WHERE status='wait'";
+
+		if ($this->conn) {
+			$result = $this->conn->query($sql);
+			if ($result->rowCount())
+				return $result;
+		}
+		return null;
+	}
+
+	public function getWaitTrucks() {
+		$sql = "SELECT * FROM trucks WHERE status='wait'";
+
+		if ($this->conn) {
+			$result = $this->conn->query($sql);
+			if ($result->rowCount())
+				return $result;
+		}
+		return null;
+	}
+
+	public function getWorkTrucks() {
+		$sql = "SELECT * FROM trucks WHERE status!='wait'";
+
+		if ($this->conn) {
+			$result = $this->conn->query($sql);
+			if ($result->rowCount())
+				return $result;
+		}
+		return null;
+	}
+
 	public function search($phonenum, $ordernum, $username) {
 		$sql = "SELECT * FROM orders WHERE ";
 
 		if ($phonenum) $sql .= "(fromphonenum='$phonenum' OR tophonenum='$phonenum') ";
-		if ($ordernum) $sql .= "AND ordernum='$ordernum' ";
+		elseif ($ordernum) $sql .= "ordernum='$ordernum' ";
 
-		if ($username) $sql .= "AND (fromuser='$username' OR touser='$username')";
+		elseif ($username) $sql .= "(fromuser='$username' OR touser='$username')";
 		
 		if ($this->conn) {
 			$result = $this->conn->query($sql);

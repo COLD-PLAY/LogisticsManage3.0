@@ -1,10 +1,11 @@
 <?php
+
 class conn {
 	// basic parameter
-	private $SERVERNAME = 'host';
-	private $USERNAME = 'username';
-	private $PASSWORD = 'password';
-	private $DBNAME = 'dbname';
+	private $SERVERNAME = 'localhost';
+	private $USERNAME = 'root';
+	private $PASSWORD = 'liaozhou1998';
+	private $DBNAME = 'coldplay';
 
 	function __construct() {
 		$num = func_num_args();

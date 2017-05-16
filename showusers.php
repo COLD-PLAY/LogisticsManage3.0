@@ -25,18 +25,20 @@
 
 		$nowuser->close();
 
-		echo "<tr>";
 		if ($result) {
-			while ($user = $result->fetch() and $user[0] != 'root') {
+			while ($user = $result->fetch()) {
+				if ($user[0] == 'root')
+					continue;
+				echo "<tr>";
 				echo "<td>$user[0]</td>";
 				echo "<td>$user[2]</td>";
 				echo "<td>$user[3]</td>";
+				echo "</tr>";
 			}
 		}
 		else {
-			echo "<td>no users</td>";
+			echo "<tr><td>no users</td></tr>";
 		}
-		echo "</tr>";
 		?>
 
 	</table>

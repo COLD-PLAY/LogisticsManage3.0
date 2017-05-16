@@ -15,6 +15,8 @@
             <th>接收用户地址</th>
             <th>订单号</th>
             <th>当前状态</th>
+            <th>货物名字</th>
+            <th>货物数量</th>
         </tr>
 
         <?php
@@ -27,9 +29,9 @@
 
         $nowuser->close();
 
-        echo "<tr>";
         if ($result) {
         	while ($order = $result->fetch()){
+                echo "<tr>";
         		echo "<td>$order[0]</td>";
             	echo "<td>$order[1]</td>";
             	echo "<td>$order[2]</td>";
@@ -38,18 +40,21 @@
             	echo "<td>$order[5]</td>";
             	echo "<td>$order[6]</td>";
             	echo "<td>$order[7]</td>";
+                echo "<td>$order[8]</td>";
+                echo "<td>$order[9]</td>";
+                echo "</tr>";
         	}
         }
         else {
-        	echo "<td>no orders</td>";
+        	echo "<tr><td>no orders</td></tr>";
         }
-        echo "</tr>";
         ?>
 
         <?php
 
         $ordernum = $_POST['ordernum'];
         $new_status = $_POST['new_status'];
+        $trucknum = $_POST['trucknum'];
 
         if ($ordernum and $new_status) {
         	$noworder = new order($ordernum);
@@ -60,7 +65,7 @@
 
             else {
             	$noworder->start();
-            	$flag = $noworder->update($new_status);
+            	$flag = $noworder->update($new_status, $trucknum);
 
             	$noworder->close();
             	if ($flag) {
@@ -80,13 +85,15 @@
             <hr class="line">
             <input type="text" name="new_status" placeholder="修改当前状态">
             <hr class="line">
+            <input type="text" name="trucknum" placeholder="选择运货货车">
+            <hr class="line">
             <input type="submit" value="修改">
         </form>
     </div>
 
     <script type="text/javascript">
         function checkall(f) {
-            if (f.ordernum.value == "" || f.status.value == "") {
+            if (f.ordernum.value == "" || f.status.value == "" || f.trucknum.value == "") {
                 alert("请填写完整后提交！");
                 return false;
             }
